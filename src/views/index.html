@@ -6,8 +6,53 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
+  <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
 </head>
 <body>
+<div id="app">
 
+  <ul>
+    <li v-for="e in list"> {{e.name}}</li>
+  </ul>
+
+
+  <form>
+    <input type="text" v-model="form.name">
+    <input type="text" v-model="form.age">
+    <button @click.prevent="submit">submit</button>
+  </form>
+</div>
+<script>
+  let app = new Vue({
+        el: '#app',
+        data: {
+          list: [],
+          form: {
+            name: '',
+            age: null
+          }
+        },
+        methods: {
+          refresh() {
+            axios.get('user').then(res => {
+                  console.log(res.data);
+                  this.list = res.data
+                }
+            )
+          },
+          submit() {
+            axios.post('user', this.form).then(res => {
+                  this.refresh()
+                }
+            )
+          }
+        },
+        created() {
+          this.refresh()
+        }
+      }
+  )
+</script>
 </body>
 </html>

@@ -1,11 +1,9 @@
 const Koa = require('koa')
 const router = require('./router/index')
-const Views = require('koa-views')
+const bodyParser = require('koa-bodyparser');
 const app = new Koa()
 
-
+app.use(bodyParser())
 app.use(router.routes())
-
-
 
 app.listen(3000)
