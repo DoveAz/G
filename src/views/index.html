@@ -13,9 +13,8 @@
 <div id="app">
 
   <ul>
-    <li v-for="e in list"> {{e.name}}</li>
+    <li v-for="e in list"> {{e.name}}  <span @click="remove(e.id)">x</span></li>
   </ul>
-
 
   <form>
     <input type="text" v-model="form.name">
@@ -46,6 +45,11 @@
                   this.refresh()
                 }
             )
+          },
+          remove(id){
+            axios.delete('user/'+id).then(res=>{
+              this.refresh()
+            })
           }
         },
         created() {
